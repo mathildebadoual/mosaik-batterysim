@@ -1,0 +1,6 @@
+# meta
+{"unit": "W", "start_date": "2014-01-01 00:00", "num_batteries": 3, "resolution": 1}
+# id_lists
+{"grid_test": ["a", "b", "c"]}
+# attrs
+{"soc_init": [0,  0.1,  0.5]}

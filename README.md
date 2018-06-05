@@ -12,6 +12,12 @@ Mosaik is a flexible Smart Grid co-simulation framework. More information can be
 pip install mosaik-batterysim
 ```
 
+# Use 
+
+```bash
+import batterysim.mosaik
+```
+
 # Running the tests
 
 ```bash

@@ -5,7 +5,7 @@ setup(
     name='mosaik-batterysim',
     version='1.0.0',
     author='Mathilde Badoual',
-    author_email='mathilde.badoual at gmail.com',
+    author_email='mathilde.badoual@gmail.com',
     description=('A simple simulator for battery profiles.'),
     long_description=(open('README.md').read()),
     url='https://github.com/mathildebadoual/mosaik-batterysim',

@@ -19,7 +19,7 @@ class TestHouseModel(unittest.TestCase):
         self.assertEqual(self.bm.num_batteries, 3)
 
         # soc_init
-        self.assertEqual(self.bm.attrs['soc_init'][2], 0.5)
+        self.assertEqual(self.bm.batteries[2]['object'].charge, 0.5)
 
     def test_batterymodel_get(self):
         self.assertEqual(self.bm.get(10)[2], 0.5)

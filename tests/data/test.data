@@ -3,4 +3,4 @@
 # id_lists
 {"grid_test": ["a", "b", "c"]}
 # attrs
-{"soc_init": [0,  0.1,  0.5]}
+{"init_charge": [0,  0.1,  0.5], "capacity": [1, 2, 1], "round_trip_eff": [0.90, 0.99, 0.97]}

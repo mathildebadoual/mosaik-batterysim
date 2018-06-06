@@ -14,12 +14,12 @@ class TestBatterySim(unittest.TestCase):
         self.meta = self.sim.init('sid')
         self.inputs = {
                 'battery_0': {
-                    'delta': {
+                    'power_rating': {
                         'agent_0': 0
                         },
                     },
                 'battery_1': {
-                    'delta': {
+                    'power_rating': {
                         'agent_1': 0.3
                         },
                     },
@@ -124,28 +124,28 @@ class TestBatterySim(unittest.TestCase):
             grid_name='grid_test')
 
         data = self.sim.get_data({
-            'Battery_0': ['P_batt'],
-            'Battery_1': ['P_batt']
+            'Battery_0': ['charge'],
+            'Battery_1': ['charge']
         })
         self.assertEqual(data, {
             'Battery_0': {
-                'P_batt': 0
+                'charge': 0
             },
             'Battery_1': {
-                'P_batt': 0
+                'charge': 0.1
             },
         })
 
         self.sim.step(1, self.inputs)
         data = self.sim.get_data({
-            'Battery_0': ['soc'],
-            'Battery_1': ['soc']
+            'Battery_0': ['power_rating'],
+            'Battery_1': ['power_rating']
         })
         self.assertEqual(data, {
             'Battery_0': {
-                'soc': 0
+                'power_rating': 0
             },
             'Battery_1': {
-                'soc': 0.4
+                'power_rating': 0
             },
         })

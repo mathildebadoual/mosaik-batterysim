@@ -13,24 +13,17 @@ class Battery:
     """
     Simple model for one battery
     """
-    def __init__(self, init_soc=0):
-        self.soc = init_soc
-        self.P_batt = 0
-        self.delta = 0
-        self.attrs = {
-                'P_batt': self.P_batt,
-                'soc': self.soc,
-                'delta': self.delta,
-                }
+    def __init__(self, init_charge=0, capacity=10, round_trip_eff=0.87, resolution=1):
+        self.charge = init_charge
+        self.capacity = capacity
+        self.round_trip_eff = round_trip_eff
+        self.resolution = resolution
+        self.power_rating = 0
 
     def step(self):
-        """Perform a simulation step by adding *delta* to *soc*."""
-        print('soc before: ', self.soc)
-        print('delta: ', self.delta)
-        self.soc += self.delta
-
-        print('soc after: ', self.soc)
-        print(self.attrs)
+        next_charge = self.charge + self.resolution * self.round_trip_eff * self.power_rating
+        if next_charge <= self.capacity :
+            self.charge = next_charge
 
 
 def eid(i):
@@ -55,18 +48,22 @@ class BatteryModel:
         """List of power grid node IDs for which to create batteries."""
 
         assert next(data).startswith('# attrs')
-        self.attrs = {}
         attr_list = json.loads(next(data))
-        self.attrs['soc_init'] = attr_list['soc_init']
 
         #: List of batteries info dicts
-        self.batteries = [
-                {
-                    'object': Battery(init_soc=self.attrs['soc_init'][i]),
-                    'num': i + 1,
-                    'node_id': n,
-                } for i, n in enumerate(self.node_ids)
-            ]
+        self.batteries = [{
+            'object':
+            Battery(
+                init_charge=attr_list['init_charge'][i],
+                capacity=attr_list['capacity'][i],
+                round_trip_eff=attr_list['round_trip_eff'][i],
+                resolution=self.resolution,
+            ),
+            'num':
+            i + 1,
+            'node_id':
+            n,
+        } for i, n in enumerate(self.node_ids)]
 
         self.batteries_by_eid = {
                 eid(i): battery['object']
@@ -99,7 +96,7 @@ class BatteryModel:
         # For now we just return the value of soc.
 
         self._cache = [
-                battery['object'].soc
+                battery['object'].charge
                 for i, battery in enumerate(self.batteries)
                     ]
         return self._cache

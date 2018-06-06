@@ -21,9 +21,8 @@ META = {
             'public': False,
             'params': [],
             'attrs': [
-                'P_bat',
-                'soc',
-                'mode',
+                'charge',
+                'power_rating',
                 'num',
                 'node_id',
             ],
@@ -93,12 +92,10 @@ class BatterySim(mosaik_api.Simulator):
         for eid, attrs in outputs.items():
             data[eid] = {}
             for attr in attrs:
-                if attr == 'soc':
-                    val = self.batteries_by_eid[eid]['object'].soc
-                if attr == 'P_batt':
-                    val = self.batteries_by_eid[eid]['object'].P_batt
-                if attr == 'delta':
-                    val = self.batteries_by_eid[eid]['object'].delta
+                if attr == 'charge':
+                    val = self.batteries_by_eid[eid]['object'].charge
+                if attr == 'power_rating':
+                    val = self.batteries_by_eid[eid]['object'].power_rating
                 data[eid][attr] = val
         return data
 
